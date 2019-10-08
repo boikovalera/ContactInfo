@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import RecordItem from './RecordItem'
 
 export class ContactInfoListItem extends Component {
     render() {
-        return (            
-            <React.Fragment>                
-                <tr>
-                    <RecordItem records={this.props.contactItem}/>   
-                </tr>                                
-            </React.Fragment>            
+        return (                        
+            <tr>                    
+                <td>{this.props.contactItem.firstname}</td>
+                <td>{this.props.contactItem.lastname}</td>
+                <td>{this.props.contactItem.age}</td>
+                <td>{this.props.contactItem.number}</td>
+            </tr>                                            
         )
     }
 }

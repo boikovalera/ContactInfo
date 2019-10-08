@@ -4,25 +4,7 @@ import './App.css';
 
 class App extends Component {
 
-  state = {
-    headers : [      
-      {
-        id: 1,
-        name: 'Имя'
-      }, 
-      {
-        id: 2,
-        name: 'Фамилия'
-      },
-      {
-        id: 3,
-        name: 'Возраст'
-      }, 
-      {
-        id: 4,
-        name: 'Телефон'
-      }
-    ],
+  state = {    
     contacts: [
       {
         id: 1,
@@ -56,7 +38,7 @@ class App extends Component {
     return (
       <div className="container">
         <h1>{this.getHeading()}</h1>  
-        <ContactInfoList headers={this.state.headers} contacts={this.state.contacts}/>
+        <ContactInfoList contacts={this.state.contacts}/>
       </div>
     )
   }
