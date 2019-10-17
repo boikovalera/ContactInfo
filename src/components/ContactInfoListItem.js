@@ -4,19 +4,20 @@ import PropTypes from 'prop-types'
 export class ContactInfoListItem extends Component {
     render() {
 
-        const contactInfo = this.props;
-
+        const {contactItem, onToggle} = this.props;
+        
         return (                        
-            <tr onClick>                    
-                <td>{contactInfo.contactItem.firstname}</td>
-                <td>{contactInfo.contactItem.lastname}</td>                
+            <tr style = { contactItem.isDone ? {backgroundColor: 'grey'} : {} }
+                onClick = { onToggle.bind(null, contactItem) }>
+                <td>{contactItem.firstname}</td>
+                <td>{contactItem.lastname}</td>                
             </tr>                                            
         )
     }
 }
 
 ContactInfoListItem.propTypes = {
-    contactInfo: PropTypes.object.isRequired,    
+    contactItem: PropTypes.object.isRequired,
     onToggle: PropTypes.func.isRequired
 }
 
