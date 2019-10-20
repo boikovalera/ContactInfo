@@ -12,100 +12,101 @@ class App extends Component {
                 firstname: 'Иван',
                 lastname: 'Иванов',
                 age: 28,
-                number: '+380999999999',
-                isDone: false
+                phone: '+380999999999'
             },
             {
                 id: 2,
                 firstname: 'Петр',
                 lastname: 'Петров',
                 age: 30,
-                number: '+380666666666',
-                isDone: false
+                phone: '+380666666666'
             },
             {
                 id: 3,
                 firstname: 'Сидор',
                 lastname: 'Сидоров',
                 age: 21,
-                number: '+380561111111',
-                isDone: false
+                phone: '+380561111111'
             }
         ],
-        selected:  {
+        selected:  this.getEmptyContact()
+    }
+
+    getEmptyContact() {
+        return {
             firstname: '',
             lastname: '',
             age: 0,
-            number: ''
-        }         
+            phone: ''
+        }
     }
 
-    getHeading() {
-        return 'Книга контактов';
+    onAddContactItem = () => {
+        this.setState({
+            selected: this.getEmptyContact()            
+        })
+    }
+
+    onSelectContactItem = (contactItem) => {
+        this.setState({
+            selected: contactItem
+        })
+    }
+
+    deleteContactItem = (contactItem) => {
+        this.setState({
+            contacts: this.state.contacts.filter((el) => el !== contactItem),
+            selected: this.getEmptyContact
+        }) 
+    }
+
+    saveContactItem = (contactItem) => {
+        if(contactItem.id) {
+            this.updateContact(contactItem);
+        } else {
+            this.createContactItem(contactItem);
+        }
     }
 
     createContactItem = (contactItem) =>{
-        contactItem.id = Date.now();
-        contactItem.isDone = false;    
-        this.addContactItem(contactItem);
+        contactItem.id = Date.now();        
+        this.setState({
+            contacts: [...this.state.contacts, contactItem],
+            selected: contactItem
+        });
+    }
+
+    updateContact = (contactItem) => {
+        this.setState({
+            contacts: this.state.contacts.map(el => el.id === contactItem.id ? contactItem : el),
+            selected: contactItem
+        })
     }
 
     addContactItem = (contactItem) => {
         this.setState({
             contacts: [...this.state.contacts, contactItem]
         });
-    }
-
-    deleteContactItem = (contactItem) => {
-        this.setState({
-            contacts: this.state.contacts.filter((el) => el.id !== contactItem.id)
-        }) 
-    } 
-
-    toggleContactItem = (contactItem) => {
-        this.onSelectContactItem(contactItem);
-        this.setState({
-            contacts: this.state.contacts.map((el) => {                
-                return el !== contactItem ? el : {...el, isDone: !el.isDone}
-            })
-        })                
-    }
-
-    onSelectContactItem = (contactItem) => {
-        this.setState({
-            selected: this.state.contacts.find((el) => el === contactItem)
-        })
-    }
-
-    onCleanContactItem = () => {
-        this.setState({
-            selected: {
-                firstname: '',
-                lastname: '',
-                age: 0,
-                number: ''
-                }
-            }
-        )
-    }
-
+    }    
+            
     render() {
         return (
             <div className="containers">
-                <h2>{this.getHeading()}</h2>
+                <h2>Книга контактов</h2>
                 <div className="row">
                     <div className="col-6">
                         <ContactInfoList 
                             contacts={this.state.contacts}
-                            onToggle={this.toggleContactItem}
+                            onSelect={this.onSelectContactItem}
                         />
-                        <button onClick={this.onCleanContactItem}>Добавить</button>
+                        <button onClick={this.onAddContactItem}>Добавить</button>
                     </div>
                     <div className="col-6">
                         <ContactInfoForm 
-                            selected={this.state.selected}                            
-                            onCreate={this.createContactItem}
-                            onDelete={this.deleteContactItem}  
+                            key={this.state.selected.id} 
+                            contact={this.state.selected}                            
+                            onDelete={this.deleteContactItem}
+                            onSave={this.saveContactItem}  
                         />
                     </div>
                 </div>

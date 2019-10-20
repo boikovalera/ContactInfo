@@ -1,24 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import './ContactInfoListItem.css';
 
 export class ContactInfoListItem extends Component {
     render() {
 
-        const {contactItem, onToggle} = this.props;
+        const {contact} = this.props;
         
-        return (                        
-            <tr style = { contactItem.isDone ? {backgroundColor: 'grey'} : {} }
-                onClick = { onToggle.bind(null, contactItem) }>
-                <td>{contactItem.firstname}</td>
-                <td>{contactItem.lastname}</td>                
-            </tr>                                            
+        return (            
+            <li onClick={this.props.onSelect.bind(null, contact)}>
+                {contact.firstname} {contact.lastname}
+            </li>
         )
     }
 }
 
 ContactInfoListItem.propTypes = {
-    contactItem: PropTypes.object.isRequired,
-    onToggle: PropTypes.func.isRequired
+    contact: PropTypes.object.isRequired,
+    onSelect: PropTypes.func.isRequired
 }
 
 export default ContactInfoListItem;

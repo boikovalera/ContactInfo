@@ -2,77 +2,75 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 export class ContactInfoForm extends Component {
-           
-    onFirstNameEventChange = (e) => {                
-        this.props.selected.firstname = e.target.value
-    }
+    
+    constructor(props) {
+        super(props);
 
-    onLastNameEventChange = (e) => {        
-        this.props.selected.lastname = e.target.value
+        this.state = {
+            ...props.contact
+        }
+        console.log(this.state)
     }
-
-    onAgeEventChange = (e) => {
-        this.props.selected.age = e.target.value
-    }
-
-    onNumberEventChange = (e) => {
-        this.props.selected.phone = e.target.value
-    }
-
-    onCreateAction = (e) => {
-        e.preventDefault();
-        this.props.onCreate({
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            age: this.state.age,
-            number: this.state.number
-        });        
-    }
-
-    onDeleteAction = (e) => {
-        e.preventDefault();        
-        this.props.onDelete(this.props.selected);        
+       
+    onDeleteAction = () => {        
+        this.props.onDelete(this.props.contact);        
     }
     
+    onContactFormSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state.contact);
+        this.props.onSave(this.state);
+    }
+
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {                        
         return (
-            <form action="#">
+            <form action="#" onSubmit={this.onContactFormSubmit}>
                 <div className="form-group row">
                     <div className="col-12 col-sm-6 mt-2">
                         <input 
                             type="text" 
                             className="form-control" 
                             id="inputName" 
+                            name="firstname"
                             placeholder="Введите имя"
-                            value={this.props.selected.firstname}
-                            onChange={this.onFirstNameEventChange}/>
+                            value={this.state.firstname}
+                            onChange={this.onChange}/>
                     </div>
                     <div className="col-12 col-sm-6 mt-2">                    
                         <input 
                             type="text" 
                             className="form-control" 
                             id="inputLastName" 
+                            name="lastname"
                             placeholder="Введите фалилию"
-                            value={this.props.selected.lastname}
-                            onChange={this.onLastNameEventChange}/>                        
+                            value={this.state.lastname}
+                            onChange={this.onChange}/>                        
                     </div>                    
                     <div className="col-12 col-sm-6 mt-2">                        
                         <input 
                             type="text" 
                             className="form-control" 
                             id="inputAge" 
+                            name="age"
                             placeholder="Введите возраст"
-                            value={this.props.selected.age}
-                            onChange={this.onAgeEventChange}/>
+                            value={this.state.age}
+                            onChange={this.onChange}/>
                     </div>
                     <div className="col-12 col-sm-6 mt-2">                        
                         <input 
                             type="text" 
                             className="form-control" 
                             id="inputPhone" 
+                            name="phone"
                             placeholder="Введите телефон"
-                            value={this.props.selected.number}
-                            onChange={this.onNumberEventChange}/>                        
+                            value={this.state.phone}
+                            onChange={this.onChange}/>                        
                     </div>
                     <div className="col-12 col-sm-6">
                         <div className="col-6 mt-4">
@@ -83,7 +81,7 @@ export class ContactInfoForm extends Component {
                     </div>
                     <div className="col-12 col-sm-6 p-20">                        
                         <div className="col-6 mt-4">
-                            <button onClick={this.onCreateAction}>
+                            <button onClick={this.onContactFormSubmit}>
                                 Сохранить
                             </button>
                         </div>
@@ -92,12 +90,6 @@ export class ContactInfoForm extends Component {
             </form>
         )
     }
-}
-
-ContactInfoForm.propTypes = {
-    selected: PropTypes.object.isRequired,
-    onCreate: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
 }
 
 export default ContactInfoForm;
