@@ -8,8 +8,7 @@ export class ContactInfoForm extends Component {
 
         this.state = {
             ...props.contact
-        }
-        console.log(this.state)
+        }        
     }
        
     onDeleteAction = () => {        
@@ -17,8 +16,7 @@ export class ContactInfoForm extends Component {
     }
     
     onContactFormSubmit = (e) => {
-        e.preventDefault();
-        console.log(this.state.contact);
+        e.preventDefault();        
         this.props.onSave(this.state);
     }
 
@@ -29,8 +27,9 @@ export class ContactInfoForm extends Component {
     }
 
     render() {                        
-        return (
+        return (                        
             <form action="#" onSubmit={this.onContactFormSubmit}>
+                <h3>Форма контактов</h3>
                 <div className="form-group row">
                     <div className="col-12 col-sm-6 mt-2">
                         <input 
@@ -74,7 +73,7 @@ export class ContactInfoForm extends Component {
                     </div>
                     <div className="col-12 col-sm-6">
                         <div className="col-6 mt-4">
-                            <button onClick={this.onDeleteAction}>
+                            <button onClick={this.onDeleteAction} disabled={!this.state.id}>
                                 Удалить
                             </button>
                         </div>                        
@@ -90,6 +89,12 @@ export class ContactInfoForm extends Component {
             </form>
         )
     }
+}
+
+ContactInfoForm.propTypes = {
+    contact: PropTypes.object.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
 }
 
 export default ContactInfoForm;

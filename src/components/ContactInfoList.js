@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import ContactInfoListItem from './ContactInfoListItem'
-import { contactType } from '../propTypes';
-import PropTypes from 'prop-types';
 import './ContactInfoList.css';
 
 export class ContactInfoList extends Component {
     render() {
-        
-        return (            
+        return (
             <ul>
                 {
                     this.props.contacts.map(contact => (
@@ -21,12 +18,5 @@ export class ContactInfoList extends Component {
         )
     }
 }
-
-ContactInfoList.propTypes = {
-    /*contactItem: contactType.isRequired,    
-    onSelect: PropTypes.func.isRequired*/
-}
-
-
 
 export default ContactInfoList;
